@@ -1,0 +1,100 @@
+{% extends 'bloodshare/base.html' %}
+
+{% block content %}
+<section class="hero" role="banner">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">Donate Blood, Save Lives</h1>
+                <p class="hero-subtitle">Join our community of heroes. Every donation can save up to three lives.</p>
+                <div class="hero-cta">
+                    <a href="{% url 'signup' %}" class="btn btn-primary btn-large" aria-label="Become a Donor">Become a Donor</a>
+                    <a href="{% if user.is_authenticated %}{% url 'dashboard' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn-secondary btn-large" aria-label="Find a Donor">Find a Donor</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-visual"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-strip" role="region" aria-label="Statistics">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.total_donors|default:"1,250" }}</div>
+                <div class="stat-label">Active Donors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.lives_saved|default:"3,420" }}</div>
+                <div class="stat-label">Lives Saved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ stats.active_requests|default:"45" }}</div>
+                <div class="stat-label">Active Requests</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works" role="region" aria-label="How it works">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-icon">1</div>
+                <h3 class="step-title">Register</h3>
+                <p class="step-description">Create your account and complete your donor profile with your blood group and location.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">2</div>
+                <h3 class="step-title">Mark Available</h3>
+                <p class="step-description">Toggle your availability when you're ready to donate and help save lives.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-icon">3</div>
+                <h3 class="step-title">Help</h3>
+                <p class="step-description">Connect with recipients in need and make a difference in someone's life.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials" role="region" aria-label="Testimonials">
+    <div class="container">
+        <h2 class="section-title">What People Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>"BloodShare made it so easy to find a donor when my father needed blood urgently. The community is amazing!"</p>
+                </div>
+                <div class="testimonial-author">- Sarah M., Recipient</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>"I've donated three times through BloodShare. It's rewarding to know I'm helping save lives."</p>
+                </div>
+                <div class="testimonial-author">- John D., Donor</div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p>"The platform is user-friendly and the response time is incredible. Thank you, BloodShare!"</p>
+                </div>
+                <div class="testimonial-author">- Maria L., Recipient</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section" role="region" aria-label="Call to action">
+    <div class="container">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Make a Difference?</h2>
+            <p class="cta-subtitle">Join thousands of donors making a real impact in their communities.</p>
+            <a href="{% url 'signup' %}" class="btn btn-primary btn-large">Get Started Today</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

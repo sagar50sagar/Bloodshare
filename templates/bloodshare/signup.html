@@ -1,0 +1,140 @@
+~{% extends 'bloodshare/base.html' %}
+
+{% block title %}Sign Up - BloodShare{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1 class="auth-title">Create Your Account</h1>
+        <p class="auth-subtitle">Join BloodShare and start saving lives today</p>
+        
+        <form method="post" enctype="multipart/form-data" class="auth-form" novalidate>
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.full_name.id_for_label }}" class="form-label">{{ form.full_name.label }}</label>
+                {{ form.full_name }}
+                {% if form.full_name.errors %}
+                    <div class="form-error" role="alert">{{ form.full_name.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="form-error" role="alert">{{ form.email.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password1.id_for_label }}" class="form-label">{{ form.password1.label }}</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                    <div class="form-error" role="alert">{{ form.password1.errors }}</div>
+                {% endif %}
+                <div class="password-strength" id="passwordStrength"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password2.id_for_label }}" class="form-label">{{ form.password2.label }}</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="form-error" role="alert">{{ form.password2.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.phone.id_for_label }}" class="form-label">{{ form.phone.label }} <span class="optional">(optional)</span></label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                    <div class="form-error" role="alert">{{ form.phone.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.blood_group.id_for_label }}" class="form-label">{{ form.blood_group.label }} <span class="optional">(optional)</span></label>
+                {{ form.blood_group }}
+                {% if form.blood_group.errors %}
+                    <div class="form-error" role="alert">{{ form.blood_group.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.city.id_for_label }}" class="form-label">{{ form.city.label }} <span class="optional">(optional)</span></label>
+                {{ form.city }}
+                {% if form.city.errors %}
+                    <div class="form-error" role="alert">{{ form.city.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.avatar.id_for_label }}" class="form-label">{{ form.avatar.label }} <span class="optional">(optional)</span></label>
+                {{ form.avatar }}
+                {% if form.avatar.errors %}
+                    <div class="form-error" role="alert">{{ form.avatar.errors }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group checkbox-group">
+                <label class="checkbox-label">
+                    {{ form.agree_to_terms }}
+                    <span>I agree to the <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a></span>
+                </label>
+                {% if form.agree_to_terms.errors %}
+                    <div class="form-error" role="alert">{{ form.agree_to_terms.errors }}</div>
+                {% endif %}
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="form-error" role="alert">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+        </form>
+
+        <p class="auth-footer">
+            Already have an account? <a href="{% url 'login' %}">Sign in</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Password strength indicator
+    const passwordInput = document.getElementById('{{ form.password1.id_for_label }}');
+    const strengthDiv = document.getElementById('passwordStrength');
+    
+    if (passwordInput && strengthDiv) {
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            let feedback = '';
+            
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/\d/)) strength++;
+            if (password.match(/[^a-zA-Z\d]/)) strength++;
+            
+            strengthDiv.className = 'password-strength';
+            if (password.length > 0) {
+                if (strength <= 1) {
+                    strengthDiv.className += ' weak';
+                    feedback = 'Weak';
+                } else if (strength <= 2) {
+                    strengthDiv.className += ' medium';
+                    feedback = 'Medium';
+                } else {
+                    strengthDiv.className += ' strong';
+                    feedback = 'Strong';
+                }
+                strengthDiv.textContent = feedback;
+            }
+        });
+    }
+</script>
+{% endblock %}
+
